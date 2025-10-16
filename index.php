@@ -1,69 +1,53 @@
 <?php
-interface CalculateSquare
+
+abstract class HumanAbstract
 {
-    public function calculateSquare(): float;
+    private $name;
 
-}
-class Rectangle implements CalculateSquare
-{
-    private $x;
-    private $y;
-
-    public function __construct(float $x, float $y)
+    public function __construct(string $name)
     {
-        $this->x = $x;
-        $this->y = $y;
+        $this->name = $name;
     }
 
-    public function calculateSquare(): float
+    public function getName(): string
     {
-        return $this->x * $this->y;
-    }
-}
-class Square implements CalculateSquare
-{
-    private $x;
-
-    public function __construct(float $x)
-    {
-        $this->x = $x;
+        return $this->name;
     }
 
-    public function calculateSquare(): float
-    {
-        return $this->x ** 2;
-    }
-}
-class Circle
-{
-    const PI = 3.1416;
+    abstract public function getGreetings(): string;
 
-    private $r;
+    abstract public function getMyNameIs(): string;
 
-    public function __construct(float $r)
+    public function introduceYourself(): string
     {
-        $this->r = $r;
-    }
-
-    public function calculateSquare(): float
-    {
-        return self::PI * ($this->r ** 2);
+        return $this->getGreetings() . '! ' . $this->getMyNameIs() . ' ' . $this->getName() . '.';
     }
 }
 
-$objects = [
-    new Square(5),
-    new Rectangle(2, 4),
-    new Circle(5)
-];
-
-foreach ($objects as $object) {
-    if ($object instanceof CalculateSquare) {
-        echo 'Объект реализует интерфейс CalculateSquare. Площадь: ' . $object->calculateSquare();
-        echo '<br>';
-        echo "Класс: " . get_class($object) . "<br>";
+class RussianHuman extends HumanAbstract {
+    public function getGreetings(): string {
+        return 'Привет';
     }
-    if (!$object instanceof CalculateSquare) {
-        echo "Объект класса " . get_class($object) . " не реализует интерфейс CaclulateSquare<br>";
+    public function getMyNameIs(): string {
+        return 'Меня зовут ' . $this->getName();
+    }
+    public function introduceYourself(): string {
+        return $this->getGreetings() . '! ' . $this->getMyNameIs() . '.';
     }
 }
+class EnglishHuman extends HumanAbstract {
+    public function getGreetings(): string {
+        return 'Heya';
+    }
+    public function getMyNameIs(): string {
+        return 'My name is ' . $this->getName();
+    }
+    public function introduceYourself(): string {
+        return $this->getGreetings() . '! ' . $this->getMyNameIs() . '.';
+    }
+}
+$russian  = new RussianHuman("Иван");
+$english = new EnglishHuman("Tomas");
+echo $russian->introduceYourself();
+echo '<br>';
+echo $english->introduceYourself();
