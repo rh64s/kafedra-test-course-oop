@@ -1,6 +1,4 @@
 <?php
-
-
 class Cat
 {
     private $name;
@@ -10,11 +8,11 @@ class Cat
     public function __construct(string $name, string $color)
     {
         $this->name = $name;
-        $this->color =$color;
+        $this->color = $color;
     }
     public function sayHello()
     {
-        echo 'Привет! Меня зовут ' . $this->name . '. Мой цвет - ' . $this->color;
+        echo 'Привет! Меня зовут ' . $this->name . '. Мой цвет шерсти - ' . $this->color;
     }
 
     public function setName(string $name)
