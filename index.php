@@ -1,6 +1,4 @@
 <?php
-
-
 class Cat
 {
     private $name;
