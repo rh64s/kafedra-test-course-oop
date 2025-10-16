@@ -1,23 +1,10 @@
 <?php
 
-
-class Cat
+abstract class HumanAbstract
 {
     private $name;
-    private $color;
-    public $weight;
 
-    public function __construct(string $name, string $color)
-    {
-        $this->name = $name;
-        $this->color =$color;
-    }
-    public function sayHello()
-    {
-        echo 'Привет! Меня зовут ' . $this->name . '. Мой цвет - ' . $this->color;
-    }
-
-    public function setName(string $name)
+    public function __construct(string $name)
     {
         $this->name = $name;
     }
@@ -27,16 +14,40 @@ class Cat
         return $this->name;
     }
 
-    public function setColor(string $color) {
-        echo "Зачем ты... ";
-        $this->color = $color;
-    }
-    public function getColor() {
-        return $this->color;
+    abstract public function getGreetings(): string;
+
+    abstract public function getMyNameIs(): string;
+
+    public function introduceYourself(): string
+    {
+        return $this->getGreetings() . '! ' . $this->getMyNameIs() . ' ' . $this->getName() . '.';
     }
 }
 
-$barsik = new Cat('Барсик', 'рыжий');
-$barsik->sayHello();
-$snowy = new Cat("Снежок", "белый");
-$snowy->sayHello();
+class RussianHuman extends HumanAbstract {
+    public function getGreetings(): string {
+        return 'Привет';
+    }
+    public function getMyNameIs(): string {
+        return 'Меня зовут ' . $this->getName();
+    }
+    public function introduceYourself(): string {
+        return $this->getGreetings() . '! ' . $this->getMyNameIs() . '.';
+    }
+}
+class EnglishHuman extends HumanAbstract {
+    public function getGreetings(): string {
+        return 'Heya';
+    }
+    public function getMyNameIs(): string {
+        return 'My name is ' . $this->getName();
+    }
+    public function introduceYourself(): string {
+        return $this->getGreetings() . '! ' . $this->getMyNameIs() . '.';
+    }
+}
+$russian  = new RussianHuman("Иван");
+$english = new EnglishHuman("Tomas");
+echo $russian->introduceYourself();
+echo '<br>';
+echo $english->introduceYourself();
