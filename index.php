@@ -1,42 +1,69 @@
 <?php
-
-
-class Cat
+interface CalculateSquare
 {
-    private $name;
-    private $color;
-    public $weight;
+    public function calculateSquare(): float;
 
-    public function __construct(string $name, string $color)
-    {
-        $this->name = $name;
-        $this->color =$color;
-    }
-    public function sayHello()
-    {
-        echo 'Привет! Меня зовут ' . $this->name . '. Мой цвет - ' . $this->color;
-    }
+}
+class Rectangle implements CalculateSquare
+{
+    private $x;
+    private $y;
 
-    public function setName(string $name)
+    public function __construct(float $x, float $y)
     {
-        $this->name = $name;
+        $this->x = $x;
+        $this->y = $y;
     }
 
-    public function getName(): string
+    public function calculateSquare(): float
     {
-        return $this->name;
+        return $this->x * $this->y;
+    }
+}
+class Square implements CalculateSquare
+{
+    private $x;
+
+    public function __construct(float $x)
+    {
+        $this->x = $x;
     }
 
-    public function setColor(string $color) {
-        echo "Зачем ты... ";
-        $this->color = $color;
+    public function calculateSquare(): float
+    {
+        return $this->x ** 2;
     }
-    public function getColor() {
-        return $this->color;
+}
+class Circle
+{
+    const PI = 3.1416;
+
+    private $r;
+
+    public function __construct(float $r)
+    {
+        $this->r = $r;
+    }
+
+    public function calculateSquare(): float
+    {
+        return self::PI * ($this->r ** 2);
     }
 }
 
-$barsik = new Cat('Барсик', 'рыжий');
-$barsik->sayHello();
-$snowy = new Cat("Снежок", "белый");
-$snowy->sayHello();
+$objects = [
+    new Square(5),
+    new Rectangle(2, 4),
+    new Circle(5)
+];
+
+foreach ($objects as $object) {
+    if ($object instanceof CalculateSquare) {
+        echo 'Объект реализует интерфейс CalculateSquare. Площадь: ' . $object->calculateSquare();
+        echo '<br>';
+        echo "Класс: " . get_class($object) . "<br>";
+    }
+    if (!$object instanceof CalculateSquare) {
+        echo "Объект класса " . get_class($object) . " не реализует интерфейс CaclulateSquare<br>";
+    }
+}
