@@ -12,7 +12,6 @@ class Cat
         $this->name = $name;
         $this->color =$color;
     }
-
     public function sayHello()
     {
         echo 'Привет! Меня зовут ' . $this->name . '. Мой цвет - ' . $this->color;
